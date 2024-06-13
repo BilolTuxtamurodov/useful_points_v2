@@ -1,0 +1,4 @@
+enum TextAlignStyle {
+  left,
+  justify
+}

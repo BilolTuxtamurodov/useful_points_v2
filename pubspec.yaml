@@ -1,0 +1,104 @@
+name: usefulpoints
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0-205.0.dev <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.6
+  flutter_screenutil: ^5.9.3
+  flutter_svg: ^2.0.10+1
+  #state management
+  get: ^4.6.5
+  rxdart: ^0.27.3
+
+  #for networking
+  dio: ^4.0.6
+  retrofit: ^3.0.1+1
+
+  #for json
+  json_annotation: ^4.7.0
+  freezed_annotation: ^2.1.0
+
+  #connectivity
+  connectivity_plus: ^3.0.3
+  flutter_native_splash: ^2.3.7
+
+  #storage
+  hive: 2.2.3
+  hive_flutter: ^1.1.0
+
+  #url launcher
+  url_launcher: ^6.2.1
+
+  #sign in
+  google_sign_in: ^6.2.1
+  sign_in_with_apple: ^6.1.0
+
+  #fire base
+  firebase_auth: ^4.19.0
+  firebase_core: ^2.31.1
+
+  #html
+  flutter_widget_from_html_core: ^0.14.11
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+  build_runner: ^2.2.1
+  json_serializable: ^6.4.1
+  retrofit_generator: ^4.1.1
+  #freezed 2.1.1 must be , now chopper is verified
+  freezed: ^2.1.0
+
+
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+
+  image: 'assets/images/native_splash.png'
+  image_dark : 'assets/images/native_splash_dark.png'
+  color: '#ffffff'
+  color_dark: '#010A27'
+  fullscreen: true
+  android_12:
+    image: 'assets/images/native_splash.png'
+    image_dark : 'assets/images/native_splash_dark.png'
+    color: '#ffffff'
+    color_dark: '#010A27'
+
+flutter:
+
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/
+    - assets/icons/
+
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/roboto/Roboto-Bold.ttf
+          weight: 600
+        - asset: assets/fonts/roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/roboto/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/roboto/Roboto-Light.ttf
+          weight: 300
+    - family: Literata
+      fonts:
+        - asset: assets/fonts/literata/Literata.ttf
+          weight: 400
+

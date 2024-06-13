@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "561848258578",
+    "project_id": "useful-points-ac11b",
+    "storage_bucket": "useful-points-ac11b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561848258578:android:dd192ac950445e03c4c8cb",
+        "android_client_info": {
+          "package_name": "uz.foydali.nuqtalar.usefulpoints"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561848258578-qus6po24tnhr0qlss93ou4f4o99e6f8d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uz.foydali.nuqtalar.usefulpoints",
+            "certificate_hash": "47a9cf1a29bfd5fbac61e098b516bd4a57d17ae3"
+          }
+        },
+        {
+          "client_id": "561848258578-ni537abbc4jo2lml4pvgrk6btc6g5dl9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDc94qmXHpXtzK6QupSZuS4TRbd1HxmWVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561848258578-ni537abbc4jo2lml4pvgrk6btc6g5dl9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "561848258578-r4c13ljj1al0a6cp4tjdl1i4e9hfgjn6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "uz.foydali.nuqtalar.usefulpoints"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
