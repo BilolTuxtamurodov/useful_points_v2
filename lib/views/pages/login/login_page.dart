@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return GetBuilder(
-      init: LoginController(),
+      init: LoginController(Get.find()),
         builder: (controller) {
           return Scaffold(
             appBar: CustomAppBar(title: Words.loginToProfile.tr,),
@@ -93,7 +93,10 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Text(Words.haveNotProfile.tr, style: robotoRegular.displayMedium),
                         SizedBox(width: 5.w,),
-                        Text(Words.registration.tr, style: robotoRegular.displayMedium?.copyWith(color: AppColors.orangeButtonColor),),
+                        InkWell(
+                          onTap: () => controller.goToRegistrationPage(),
+                          child: Text(Words.registration.tr, style: robotoRegular.displayMedium?.copyWith(color: AppColors.orangeButtonColor),),
+                        ),
                       ],
                     ),
                     SizedBox(height: 20.h,),

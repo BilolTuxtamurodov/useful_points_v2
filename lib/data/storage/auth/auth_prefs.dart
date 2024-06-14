@@ -15,6 +15,12 @@ class AuthPrefs extends Holder {
   set email(String token) => authBox.put(emailId, token);
 
   @override
+  String get code => authBox.get(codeId, defaultValue: '');
+
+  @override
+  set code(String token) => authBox.put(codeId, token);
+
+  @override
   bool get logged => authBox.get(loggedId, defaultValue: false);
 
   @override
@@ -40,5 +46,6 @@ class AuthPrefs extends Holder {
   static const accessTokenId = 'access_token';
   static const idTokenId = 'id_token';
   static const loggedId = 'logged';
+  static const codeId = 'code';
 
 }

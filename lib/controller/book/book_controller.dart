@@ -1,26 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:usefulpoints/controller/base/base_controller.dart';
 import 'package:usefulpoints/data/storage/app/locals/app_mode_pref/app_mode_pref.dart';
 import 'package:usefulpoints/data/storage/app/locals/error_words.dart';
 import 'package:usefulpoints/data/storage/app/locals/lang_prefs/language_prefs.dart';
+import 'package:usefulpoints/data/storage/app/locals/words.dart';
 import 'package:usefulpoints/data/storage/auth/auth_prefs.dart';
 import 'package:usefulpoints/data/tools/enums/book_mode.dart';
 import 'package:usefulpoints/data/tools/enums/request_result.dart';
 import 'package:usefulpoints/data/tools/enums/text_align_style.dart';
 import 'package:usefulpoints/data/tools/service/connectivity_service/connection.dart';
+import 'package:usefulpoints/data/tools/styles/app_colors.dart';
 import 'package:usefulpoints/data/tools/styles/app_mode.dart';
 import 'package:usefulpoints/data/tools/styles/text_theme.dart';
 import 'package:usefulpoints/domain/data/book/book_data.dart';
 import 'package:usefulpoints/domain/use_cases/book_use_case.dart';
+import 'package:usefulpoints/views/pages/app_info/about_app_page.dart';
+import 'package:usefulpoints/views/pages/app_mode/app_mode_page.dart';
 import 'package:usefulpoints/views/pages/book/book_chapters_page.dart';
+import 'package:usefulpoints/views/pages/choose_lang/choose_lang_page.dart';
+import 'package:usefulpoints/views/pages/login/login_page.dart';
 import 'package:usefulpoints/views/pages/need/need_login_page.dart';
 import 'package:usefulpoints/views/pages/need/need_purchase_page.dart';
+import 'package:usefulpoints/views/pages/video_guid/video_guide_page.dart';
 import 'package:usefulpoints/views/widgets/top_snack_bar.dart';
 
 class BookController extends BaseController {
   bool isLoading = false;
+  bool noInternet = false;
   bool hasNextPage = false;
   bool canShowModal = false;
   int offset = 0;
@@ -34,6 +43,11 @@ class BookController extends BaseController {
   TextStyle currentTextStyle = robotoRegular.displayMedium!;
   late ScrollController scrollController;
   BookController(this.bookUseCase);
+
+  Future<void> onRefresh() async {
+    Future.delayed(const Duration(seconds: 1));
+    await getBookFirst();
+  }
 
   @override
   void onInit() async {
@@ -63,8 +77,10 @@ class BookController extends BaseController {
   Future<RequestResult> getBookFirst() async {
     //#check internet connectivity
     if (await CheckNet().checkInternet() == false) {
-
+      noInternet = true;
       return RequestResult.noInternet;
+    } else {
+      noInternet = false;
     }
     //#check field completeness
     offset = 0;
@@ -99,8 +115,10 @@ class BookController extends BaseController {
     }
     //#check internet connectivity
     if (await CheckNet().checkInternet() == false) {
-
+      noInternet = true;
       return RequestResult.noInternet;
+    } else {
+      noInternet = false;
     }
     //#check field completeness
     offset += 1;
@@ -157,7 +175,6 @@ class BookController extends BaseController {
         Get.find<ModePrefs>().appMode = true;
       }
     }
-
     currentMode = mode;
     update();
   }
@@ -194,5 +211,95 @@ class BookController extends BaseController {
     Get.find<AuthPrefs>().logged ?
     Get.to(const NeedPurchasePage(), transition: Transition.rightToLeft)
     : Get.to(const NeedLoginPage(), transition: Transition.rightToLeft);
+  }
+
+  Future<void> goToAppModePage() async {
+    var future = await Get.to(const AppModePage(), transition: Transition.rightToLeft);
+    update();
+  }
+
+  void goToChooseLanguagePage() {
+    Get.to(const ChooseLangPage(isFirstPage: false,), transition: Transition.rightToLeft);
+  }
+
+  void goToAboutPage() {
+    Get.to(const AboutAppPage(), transition: Transition.rightToLeft);
+  }
+
+  void goToVideGuidePage() {
+    Get.to(const VideoGuidePage(isFirstPage: false,), transition: Transition.rightToLeft);
+  }
+
+  void goToLoginPage() {
+    Get.to(const LoginPage(), transition: Transition.rightToLeft);
+  }
+
+  Future<bool> confirmDialog(BuildContext context) async {
+    final size = MediaQuery.of(context).size;
+    final value = await showDialog<bool>(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Theme.of(context).primaryColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.r),
+        ),
+        actionsPadding: EdgeInsets.only(bottom: 20.w, right: 10.w, left: 10.w),
+        title: Text(
+          Words.wantLogOut.tr,
+          style: robotoRegular.displayMedium,
+          textAlign: TextAlign.center,
+        ),
+        content: SizedBox(
+          width: size.width * .85,
+          height: 50.h,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              InkWell(
+                onTap: () async {
+                  Navigator.of(context).pop(false);
+                },
+                child: Container(
+                  width: size.width * .28,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.circular(4.r)
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+                  child: Text(
+                    Words.cancel.tr,
+                    style: robotoRegular.displaySmall,
+                  ),
+                ),
+              ),
+              SizedBox(width: 5.w),
+              InkWell(
+                onTap: () async {
+                  Navigator.of(context).pop(true);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: size.width * .38,
+                  decoration: BoxDecoration(
+                      color: AppColors.orangeButtonColor,
+                      borderRadius: BorderRadius.circular(4.r)
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+                  child: Text(
+                    Words.logOut.tr,
+                    style: robotoRegular.displaySmall?.copyWith(color: Theme.of(context).primaryColor),
+                  ),
+                ),
+
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    return value!;
   }
 }

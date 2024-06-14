@@ -8,8 +8,12 @@ import 'package:usefulpoints/example.dart';
 import 'package:usefulpoints/views/pages/app_mode/app_mode_page.dart';
 import 'package:usefulpoints/views/pages/book/book_chapters_page.dart';
 import 'package:usefulpoints/views/pages/book/book_page.dart';
+import 'package:usefulpoints/views/pages/choose_lang/choose_lang_page.dart';
 import 'package:usefulpoints/views/pages/login/login_page.dart';
 import 'package:usefulpoints/views/pages/need/need_purchase_page.dart';
+import 'package:usefulpoints/views/pages/registration/confirm_page.dart';
+import 'package:usefulpoints/views/pages/reset/reset_password_confirm_page.dart';
+import 'package:usefulpoints/views/pages/reset/reset_password_page.dart';
 import 'package:usefulpoints/views/pages/transaction/transaction_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -33,7 +37,7 @@ class MyApp extends StatelessWidget {
           title: 'Foydali nuqtalar',
           darkTheme: MyCustomMode().darkTheme,
           theme: MyCustomMode().lightTheme,
-          home: const BookPage()
+          home: const ChooseLangPage()
         );
       },
     );

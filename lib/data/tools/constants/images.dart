@@ -24,6 +24,8 @@ class CustomImages {
   static const String alignJustifyIcon = 'assets/icons/align-justify.svg';
   static const String copyIcon = 'assets/icons/copy_icon.svg';
   static const String cardsIcon = 'assets/icons/cards_icon.svg';
+  static const String logOutIcon = 'assets/icons/logout_icon.svg';
+  static const String noInternetIcon = 'assets/icons/no_internet.svg';
 
 
   static String getFlag(String lang) {

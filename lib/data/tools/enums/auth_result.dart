@@ -3,4 +3,5 @@ enum AuthResult {
   success,
   notRegistered,
   failure,
+  noInternet,
 }

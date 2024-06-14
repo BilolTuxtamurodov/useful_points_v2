@@ -15,6 +15,7 @@ import 'package:usefulpoints/views/widgets/top_snack_bar.dart';
 
 class TransactionController extends BaseController {
   bool isLoading = false;
+  bool noInternet = false;
 
   bool hasNextPage = false;
   int offset = 0;
@@ -28,8 +29,13 @@ class TransactionController extends BaseController {
   @override
   void onInit() async {
     scrollController = ScrollController()..addListener(getAppInfoMore);
-    await getAppInfo();
+    await getCardInfo();
     super.onInit();
+  }
+
+  Future<void> onRefresh() async {
+    Future.delayed(const Duration(seconds: 1));
+    await getCardInfo();
   }
 
   @override
@@ -46,11 +52,13 @@ class TransactionController extends BaseController {
 
   }
 
-  Future<RequestResult> getAppInfo() async {
+  Future<RequestResult> getCardInfo() async {
     //#check internet connectivity
     if (await CheckNet().checkInternet() == false) {
-
+      noInternet = true;
       return RequestResult.noInternet;
+    } else {
+      noInternet = false;
     }
     //#check field completeness
 
@@ -85,8 +93,10 @@ class TransactionController extends BaseController {
     }
     //#check internet connectivity
     if (await CheckNet().checkInternet() == false) {
-
+      noInternet = true;
       return RequestResult.noInternet;
+    } else {
+      noInternet = false;
     }
     //#check field completeness
     offset += 1;

@@ -6,6 +6,8 @@ import 'package:usefulpoints/data/storage/app/locals/lang_prefs/language_prefs.d
 import 'package:usefulpoints/data/storage/auth/auth_prefs.dart';
 import 'package:usefulpoints/data/storage/auth/holder.dart';
 import 'package:usefulpoints/domain/use_cases/app_info_use_case.dart';
+import 'package:usefulpoints/domain/use_cases/auth_use_case.dart';
+import 'package:usefulpoints/domain/use_cases/auth_use_case.dart';
 import 'package:usefulpoints/domain/use_cases/book_use_case.dart';
 
 class DIService {
@@ -21,5 +23,6 @@ class DIService {
 
     Get.lazyPut<BookUseCase>(() => BookUseCase(Get.find()), fenix: true);
     Get.lazyPut<AppInfoUseCase>(() => AppInfoUseCase(Get.find()), fenix: true);
+    Get.lazyPut<AuthUseCase>(() => AuthUseCase(Get.find()), fenix: true);
   }
 }

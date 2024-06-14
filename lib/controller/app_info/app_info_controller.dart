@@ -16,11 +16,14 @@ import 'package:usefulpoints/domain/entities/book/book_response.dart';
 import 'package:usefulpoints/domain/use_cases/app_info_use_case.dart';
 import 'package:usefulpoints/domain/use_cases/book_use_case.dart';
 import 'package:usefulpoints/views/pages/app_mode/app_mode_page.dart';
+import 'package:usefulpoints/views/pages/book/book_page.dart';
 import 'package:usefulpoints/views/pages/choose_lang/choose_lang_page.dart';
+import 'package:usefulpoints/views/pages/login/login_page.dart';
 import 'package:usefulpoints/views/widgets/top_snack_bar.dart';
 
 class AppInfoController extends BaseController {
   bool isLoading = false;
+  bool noInternet = false;
 
   bool hasNextPage = false;
   int offset = 0;
@@ -44,19 +47,26 @@ class AppInfoController extends BaseController {
     super.dispose();
   }
 
-  void goToReadTheBook() {
+  Future<void> onRefresh() async {
+    Future.delayed(const Duration(seconds: 1));
+    await getAppInfo();
+  }
 
+  void goToReadTheBook() {
+    Get.to(const BookPage(), transition: Transition.rightToLeft);
   }
 
   void goToLoginToProfile() {
-
+    Get.to(const LoginPage(), transition: Transition.rightToLeft);
   }
 
   Future<RequestResult> getAppInfo() async {
     //#check internet connectivity
     if (await CheckNet().checkInternet() == false) {
-
+      noInternet = true;
       return RequestResult.noInternet;
+    } else {
+      noInternet = false;
     }
     //#check field completeness
 
@@ -91,8 +101,10 @@ class AppInfoController extends BaseController {
     }
     //#check internet connectivity
     if (await CheckNet().checkInternet() == false) {
-
+      noInternet = true;
       return RequestResult.noInternet;
+    } else {
+      noInternet = false;
     }
     //#check field completeness
     offset += 1;
@@ -119,17 +131,5 @@ class AppInfoController extends BaseController {
       })
       ..addTo(subscribe);
     return RequestResult.success;
-  }
-
-  void goToAppModePage() {
-    Get.to(const AppModePage(), transition: Transition.rightToLeft);
-  }
-
-  void goToChooseLanguagePage() {
-    Get.to(const ChooseLangPage(isFirstPage: false,), transition: Transition.rightToLeft);
-  }
-
-  void goToAboutPage() {
-
   }
 }

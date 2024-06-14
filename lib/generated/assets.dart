@@ -12,7 +12,9 @@ class Assets {
   static const String iconsFr = 'assets/icons/fr.svg';
   static const String iconsGoogle = 'assets/icons/google.svg';
   static const String iconsInfoIcon = 'assets/icons/info_icon.svg';
+  static const String iconsLogoutIcon = 'assets/icons/logout_icon.svg';
   static const String iconsModeIcon = 'assets/icons/mode_icon.svg';
+  static const String iconsNoInternet = 'assets/icons/no_internet.svg';
   static const String iconsPhoneMode = 'assets/icons/phone_mode.svg';
   static const String iconsPlayIcon = 'assets/icons/play_icon.svg';
   static const String iconsRu = 'assets/icons/ru.svg';

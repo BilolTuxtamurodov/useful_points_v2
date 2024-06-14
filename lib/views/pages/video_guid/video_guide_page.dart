@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
@@ -14,6 +12,7 @@ import 'package:usefulpoints/data/tools/styles/text_theme.dart';
 import 'package:usefulpoints/domain/data/info/info_data.dart';
 import 'package:usefulpoints/views/widgets/custom_app_bar.dart';
 import 'package:usefulpoints/views/widgets/custom_button.dart';
+import 'package:usefulpoints/views/widgets/no_internet_widget.dart';
 import 'package:usefulpoints/views/widgets/you_tube_modal.dart';
 
 class VideoGuidePage extends StatelessWidget {
@@ -34,6 +33,23 @@ class VideoGuidePage extends StatelessWidget {
             ),
             body: Stack(
               children: [
+                if (controller.isLoading) const Center(child: CircularProgressIndicator(color: AppColors.orangeButtonColor,)),
+                if (controller.noInternet) Stack(
+                  children: [
+                    const NoInternet(),
+                    Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: InkWell(
+                          onTap: () => controller.onRefresh(),
+                          child: CustomButton(
+                            title: Words.tryAgain.tr,
+                          ),
+                        )
+                    ),
+                  ],
+                ),
                 SingleChildScrollView(
                   child: SizedBox(
                     height: size.height - 85,
@@ -41,6 +57,7 @@ class VideoGuidePage extends StatelessWidget {
                       children: [
                         SvgPicture.asset(CustomImages.backgroundCircles, height: size.height * .80,),
                         ListView.builder(
+                          padding: EdgeInsets.only(bottom: 140.h),
                           shrinkWrap: true,
                           itemCount: controller.infos.length,
                           itemBuilder: (context, index) {

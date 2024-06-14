@@ -6,6 +6,7 @@ class ApiConst {
 
   // Users
   static const String LOGIN = "/api/users/login/";
+  static const String LOGIN_WITH_GOOGLE = "/api/users/google/";
   static const String ACTIVATE = "/api/users/activate/";
   static const String REGISTER = "/api/users/register/";
   static const String RESET_PASSWORD = "/api/users/reset-password/";

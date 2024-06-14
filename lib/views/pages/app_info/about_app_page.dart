@@ -11,6 +11,8 @@ import 'package:usefulpoints/domain/data/info/info_data.dart';
 import 'package:usefulpoints/domain/use_cases/app_info_use_case.dart';
 import 'package:usefulpoints/views/pages/app_mode/widget/app_mode_item.dart';
 import 'package:usefulpoints/views/widgets/custom_app_bar.dart';
+import 'package:usefulpoints/views/widgets/custom_button.dart';
+import 'package:usefulpoints/views/widgets/no_internet_widget.dart';
 
 class AboutAppPage extends StatefulWidget {
   const AboutAppPage({super.key});
@@ -34,8 +36,23 @@ class _AboutAppPageState extends State<AboutAppPage> {
                   height: size.height - 85.h,
                   child: Stack(
                     children: [
-                      if (controller.isLoading)
-                        const Center(child: CircularProgressIndicator(color: AppColors.orangeButtonColor,)),
+                      if (controller.isLoading) const Center(child: CircularProgressIndicator(color: AppColors.orangeButtonColor,)),
+                      if (controller.noInternet) Stack(
+                        children: [
+                          const NoInternet(),
+                          Positioned(
+                              left: 0,
+                              right: 0,
+                              bottom: 0,
+                              child: InkWell(
+                                onTap: () => controller.onRefresh(),
+                                child: CustomButton(
+                                  title: Words.tryAgain.tr,
+                                ),
+                              )
+                          ),
+                        ],
+                      ),
                       ListView.builder(
                           controller: controller.scrollController,
                           shrinkWrap: true,

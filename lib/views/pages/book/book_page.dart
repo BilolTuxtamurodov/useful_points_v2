@@ -15,6 +15,8 @@ import 'package:usefulpoints/views/pages/book/widget/book_text_style_item.dart';
 import 'package:usefulpoints/views/pages/book/widget/custom_drawer.dart';
 import 'package:usefulpoints/views/pages/book/widget/text_align_style_item.dart';
 import 'package:usefulpoints/views/pages/book/widget/text_style_item.dart';
+import 'package:usefulpoints/views/widgets/custom_button.dart';
+import 'package:usefulpoints/views/widgets/no_internet_widget.dart';
 
 class BookPage extends StatefulWidget {
   const BookPage({super.key});
@@ -33,7 +35,7 @@ class _BookPageState extends State<BookPage> {
           return Theme(
             data: controller.getMode(),
             child: Scaffold(
-              drawer: const CustomDrawer(),
+              drawer: CustomDrawer(controller: controller,),
               appBar: AppBar(
                 title: Text(Words.book.tr, style: robotoRegular.displayMedium?.copyWith(fontSize: 20.sp),),
                 centerTitle: true,
@@ -50,8 +52,23 @@ class _BookPageState extends State<BookPage> {
                   height: size.height - 85.h,
                   child: Stack(
                     children: [
-                      if (controller.isLoading)
-                        const Center(child: CircularProgressIndicator(color: AppColors.orangeButtonColor,)),
+                      if (controller.isLoading) const Center(child: CircularProgressIndicator(color: AppColors.orangeButtonColor,)),
+                      if (controller.noInternet) Stack(
+                        children: [
+                          const NoInternet(),
+                          Positioned(
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            child: InkWell(
+                              onTap: () => controller.onRefresh(),
+                              child: CustomButton(
+                                title: Words.tryAgain.tr,
+                              ),
+                            )
+                          ),
+                        ],
+                      ),
                       ListView.builder(
                         controller: controller.scrollController,
                         shrinkWrap: true,
@@ -69,7 +86,7 @@ class _BookPageState extends State<BookPage> {
                         }
                       ),
                       Visibility(
-                        visible: controller.canShowModal,
+                        visible: controller.canShowModal && !controller.noInternet,
                         child: Positioned(
                           bottom: 0,
                           child: ClipRRect(
@@ -175,7 +192,7 @@ class _BookPageState extends State<BookPage> {
                         ),
                       ),
                       Visibility(
-                        visible: !controller.canShowModal,
+                        visible: !controller.canShowModal && !controller.noInternet,
                         child: Positioned(
                           bottom: 0,
                           child: InkWell(

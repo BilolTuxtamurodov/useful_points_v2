@@ -47,7 +47,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
                 onTap: () => setState(() {
                   canShow = !canShow;
                 }),
-                child: const Icon(Icons.remove_red_eye,),
+                child: Icon(Icons.remove_red_eye, color: Theme.of(context).hintColor,),
               ),
             ) : null,
           ),

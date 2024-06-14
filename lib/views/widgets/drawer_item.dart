@@ -8,10 +8,12 @@ import 'package:usefulpoints/data/tools/styles/text_theme.dart';
 class DrawerItem extends StatelessWidget {
   final String logo;
   final String title;
+  final Color? titleColor;
+  final Color? iconColor;
   final String suffixTitle;
   final bool withBorder;
   final bool isFlag;
-  const DrawerItem({super.key, required this.logo, required this.title, this.suffixTitle = '', this.withBorder = true, this.isFlag = false});
+  const DrawerItem({super.key, required this.logo, required this.title, this.suffixTitle = '', this.withBorder = true, this.isFlag = false, this.titleColor, this.iconColor});
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +35,13 @@ class DrawerItem extends StatelessWidget {
                   maxWidth: size.width * .15,
                 ),
                 margin: EdgeInsets.only(right: 15.w),
-                child: SvgPicture.asset(logo, color: !isFlag ? Theme.of(context).dividerColor : null),
+                child: SvgPicture.asset(logo, color: !isFlag ? Theme.of(context).dividerColor : iconColor),
               ),
               Container(
                 constraints: BoxConstraints(
                   maxWidth: size.width * .55,
                 ),
-                child: Text(title, style: robotoMedium.displayLarge,),
+                child: Text(title, style: robotoMedium.displayLarge?.copyWith(color: titleColor),),
               ),
             ],
           ),
